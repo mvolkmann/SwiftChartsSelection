@@ -105,10 +105,11 @@ struct ContentView: View {
                     ruleMark(selectedDate: rawSelectedDate)
                 }
             }
+            // See https://feedbackassistant.apple.com/feedback/12346794
             .chartXSelection(value: $rawSelectedDate)
             .padding(.top, 40)
         }
-        .padding()
+        .padding(50)
     }
 }
 
