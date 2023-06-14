@@ -41,7 +41,7 @@ private let forecast: [Weather] = [
 ]
 
 struct ContentView: View {
-    @State var rawSelectedDate: Date?
+    @State private var rawSelectedDate: Date?
 
     private let dateFormatter = DateFormatter()
 
