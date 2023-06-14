@@ -107,7 +107,7 @@ struct ContentView: View {
             }
             // See https://feedbackassistant.apple.com/feedback/12346794
             .chartXSelection(value: $rawSelectedDate)
-            .padding(.top, 40)
+            .padding(.top, 40) // leaves room for annotations
         }
         .padding(50)
     }
