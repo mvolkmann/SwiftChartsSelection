@@ -59,6 +59,35 @@ struct ContentView: View {
         .border(.gray)
     }
 
+    private func ruleMark(selectedDate: Date) -> some ChartContent {
+        // Find the index of the first Weather object
+        // that is after the selected date.
+        let index = forecast
+            .firstIndex { $0.dateTime > selectedDate }
+            ?? forecast.count
+
+        // Get the selected Weather object.
+        let weather = forecast[index - 1]
+
+        return RuleMark(x: .value("Selected", weather.dateTime))
+            .foregroundStyle(.gray.opacity(0.3))
+            .offset(yStart: -10) // extend above chart
+            .zIndex(-1) // behind LineMarks and PointMarks
+            .annotation(
+                position: .top, // above chart
+                spacing: 0,
+                // between top of RuleMark & annotation
+                overflowResolution: .init(
+                    x: .fit(to: .chart),
+                    // prevents horizontal spill
+                    y: .disabled // allows annotation above
+                    // chart
+                )
+            ) {
+                annotation(for: weather)
+            }
+    }
+
     var body: some View {
         VStack {
             Chart(forecast) { data in
@@ -73,32 +102,7 @@ struct ContentView: View {
                     .foregroundStyle(.black)
 
                 if let rawSelectedDate {
-                    // Find the index of the first Weather object
-                    // that is after the selected date.
-                    let index = forecast
-                        .firstIndex { $0.dateTime > rawSelectedDate }
-                        ?? forecast.count
-
-                    // Get the selected Weather object.
-                    let weather = forecast[index - 1]
-
-                    RuleMark(x: .value("Selected", weather.dateTime))
-                        .foregroundStyle(.gray.opacity(0.3))
-                        .offset(yStart: -10) // extend above chart
-                        .zIndex(-1) // behind LineMarks and PointMarks
-                        .annotation(
-                            position: .top, // above chart
-                            spacing: 0,
-                            // between top of RuleMark & annotation
-                            overflowResolution: .init(
-                                x: .fit(to: .chart),
-                                // prevents horiz. spill
-                                y: .disabled // allows annotation above
-                                // chart
-                            )
-                        ) {
-                            annotation(for: weather)
-                        }
+                    ruleMark(selectedDate: rawSelectedDate)
                 }
             }
             .chartXSelection(value: $rawSelectedDate)
