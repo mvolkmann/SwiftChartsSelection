@@ -75,13 +75,10 @@ struct ContentView: View {
             .zIndex(-1) // behind LineMarks and PointMarks
             .annotation(
                 position: .top, // above chart
-                spacing: 0,
-                // between top of RuleMark & annotation
+                spacing: 0, // between top of RuleMark & annotation
                 overflowResolution: .init(
-                    x: .fit(to: .chart),
-                    // prevents horizontal spill
-                    y: .disabled // allows annotation above
-                    // chart
+                    x: .fit(to: .chart), // prevents horizontal spill
+                    y: .disabled // allows annotation above chart
                 )
             ) {
                 annotation(for: weather)
@@ -109,7 +106,7 @@ struct ContentView: View {
             .chartXSelection(value: $rawSelectedDate)
             .padding(.top, 40) // leaves room for annotations
         }
-        .padding(50)
+        .padding()
     }
 }
 
